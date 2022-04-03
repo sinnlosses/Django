@@ -11,15 +11,15 @@ class Author(models.Model):
 # 本の表を作成
 class Book(models.Model):
     title = models.CharField(max_length = 500, verbose_name = "タイトル")
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.DateField(verbose_name = "開始日")
+    end_date = models.DateField(verbose_name = "終了日")
     author = models.ForeignKey(Author, on_delete = models.CASCADE, verbose_name = "作者", related_name = "book")
     def __str__(self):
         return self.title
 
 # 記録の表を作成
 class Memory(models.Model):
-    text = models.TextField()
+    text = models.TextField(verbose_name = "感想")
     book = models.ForeignKey(Book, on_delete = models.CASCADE, verbose_name = "タイトル", related_name = "memory")
     def __str__(self):
         return self.text
