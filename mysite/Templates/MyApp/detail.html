@@ -3,5 +3,13 @@
 <h3>{{ book.start_date }}~{{ book.end_date }}</h3>
 
 {% for memory in book.memory.all %}
-    <li>{{ memory.text }}</li>
+    <li>
+        <button onclick = "location.href = '{% url \'MyApp:updatememory\' memory.id %}'">edit</button>
+        <button onclick = "location.href = '{% url \'MyApp:deletememory\' memory.id %}'">delete</button>
+        {{ memory.text }}
+    </li>
+
+    <a href="{% url 'myapp:writingthisbookmemory' book.id %}">Write memory of this book data</a><br>
+    <a href="{% url 'myapp:deletebook' book.id %}">Delete this book data</a><br>
+    <a href="{% url 'myapp:index' %}">To Index</a><br>
 {% endfor %}

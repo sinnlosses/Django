@@ -7,5 +7,8 @@ urlpatterns = [
     path("book/<int:pk>/", views.bookdetail, name = "book_detail"),
     path('register/author/', views.registerauthor, name='registerauthor'),
     path('register/book/', views.registerbook, name='registerbook'), 
-    path('writing/memory/', views.writingmemory, name='writingmemory')
+    path('writing/memory/', views.writingmemory, name='writingmemory'),
+    path('update/memory/<int:pk>/', views.updatememory, name='updatememory'),
+    path('delete/memory/<int:pk>/', views.deletememory, name='deletememory'),
+    path('delete/book/<int:pk>/', views.deletebook, name='deletebook')
 ]
