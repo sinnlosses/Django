@@ -3,8 +3,8 @@
     <li>
         <a href="{% url 'MyApp:book_detail' book.id %}">{{ book.title }}</a>
         <a href="{% url 'MyApp:registerauthor' %}">Register Author</a><br>
-        <a href="{% url 'MyApp:registebook' %}">Register Book</a><br>
-        <a href="{% url 'MyApp:writingmemory' %}">Writing Memory</a>
+        <a href="{% url 'MyApp:registerbook' %}">Register Book</a><br>
+        <a href="{% url 'MyApp:writingmemory' book.id %}">Writing Memory</a>
         {{ book.author }}
         {{ book.start_date }}~{{ book.end_date }}
     </li>
