@@ -2,11 +2,12 @@
     {% for book in book_list %}
     <li>
         <a href="{% url 'MyApp:book_detail' book.id %}">{{ book.title }}</a>
-        <a href="{% url 'MyApp:registerauthor' %}">Register Author</a><br>
-        <a href="{% url 'MyApp:registerbook' %}">Register Book</a><br>
-        <a href="{% url 'MyApp:writingmemory' book.id %}">Writing Memory</a>
         {{ book.author }}
         {{ book.start_date }}~{{ book.end_date }}
     </li>
+        <a href="{% url 'MyApp:registerauthor' %}">作者登録</a>
+        <a href="{% url 'MyApp:registerbook' %}">本棚</a>
+        <a href="{% url 'MyApp:writingmemory' book.id %}">感想</a>
+    
     {% endfor %}
 {% endif %}

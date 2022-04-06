@@ -4,12 +4,14 @@
 
 {% for memory in book.memory.all %}
     <li>
-        <button onclick = "location.href = '{% url  'MyApp:updatememory' memory.id %}'">edit</button>
-        <button onclick = "location.href = '{% url  'MyApp:deletememory' memory.id %}'">delete</button>
         {{ memory.text }}
     </li>
+    
+    <button onclick = "location.href = '{% url  'MyApp:updatememory' memory.id %}'">編集</button>
+    <button onclick = "location.href = '{% url  'MyApp:deletememory' memory.id %}'">削除</button>
+    <br>
 
-    <a href="{% url 'MyApp:writingmemory' book.id %}">Write memory of this book data</a><br>
+    <a href="{% url 'MyApp:writingmemory' book.id%}">Write memory of this book data</a><br>
     <a href="{% url 'MyApp:deletebook' book.id %}">Delete this book data</a><br>
     <a href="{% url 'MyApp:index' %}">To Index</a><br>
 {% endfor %}

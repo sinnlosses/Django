@@ -4,9 +4,9 @@ from django.utils import timezone
 
 # 作者の表を作成
 class Author(models.Model):
-    name = models.CharField(max_length = 180, verbose_name = "作者")
+    author = models.CharField(max_length = 180, verbose_name = "作者")
     def __str__(self):
-        return self.name
+        return self.author
 
 # 本の表を作成
 class Book(models.Model):
@@ -20,6 +20,6 @@ class Book(models.Model):
 # 記録の表を作成
 class Memory(models.Model):
     text = models.TextField(verbose_name = "感想")
-    book = models.ForeignKey(Book, on_delete = models.CASCADE, verbose_name = "タイトル", related_name = "memory")
+    title = models.ForeignKey(Book, on_delete = models.CASCADE, verbose_name = "タイトル", related_name = "memory")
     def __str__(self):
         return self.text

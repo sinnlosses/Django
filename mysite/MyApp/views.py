@@ -1,4 +1,5 @@
 from re import template
+from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 import pkg_resources
@@ -7,92 +8,92 @@ from MyApp.form import AuthorForm, BookForm, MemoryForm
 from MyApp.models import Author, Book, Memory
 
 
-# 登録したデータ一覧を表示するview
+
 def index(request):
     book_list = Book.objects.all()
-    return render(request, "MyApp/index.html", {"book_list":book_list})
+    return render(request, "MyApp/index.html", {"book_list": book_list})
 
-# それぞれの本について詳細を表示するview
-def bookdetail(request, pk):
-    book_detail = Book.objects.get(pk = pk)
-    return render(request, "MyApp/detail.html", {"book":book_detail})
 
-# 作者名を登録するview
+def bookdetail(request: HttpRequest, pk):
+    book_detail = Book.objects.get(pk=pk)
+    return render(request, "MyApp/detail.html", {"book": book_detail})
+
+
 def registerauthor(request):
     if request.method == "POST":
         form = AuthorForm(request.POST)
         if form.is_valid():
-            author = form.save(commit = False)
+            author = form.save(commit=False)
             author.save()
             return redirect('MyApp:registerbook')
     else:
         form = AuthorForm()
         return render(request, 'MyApp/register.html', {'form': form})
 
-# 本の情報を登録するview
+
 def registerbook(request):
     if request.method == "POST":
         form = BookForm(request.POST)
         if form.is_valid():
-            book = form.save(commit = False)
-            book.save()
-            return redirect('MyApp:book_detail', pk = book.pk)
+            tempbook = form.save(commit=False)
+            tempbook.save()
+            return redirect('MyApp:book_detail', pk = tempbook.pk)
     else:
         form = BookForm()
         return render(request, 'MyApp/register.html', {'form': form})
 
-# 本の感想を登録するview
-def writingmemory(request):
+
+def writingmemory(request, pk):
     if request.method == "POST":
         form = MemoryForm(request.POST)
         if form.is_valid():
-            memory = form.save(commit=False)
-            memory.save()
-            return redirect('MyApp:book_detail', pk = memory.book.pk)
+            tempmemory = form.save(commit=False)
+            tempmemory.save()
+            return redirect('MyApp:book_detail', pk = tempmemory.title.pk)
     else:
         form = MemoryForm()
         return render(request, 'MyApp/register.html', {'form': form})
 
-# 本の感想を更新するview
+
 def updatememory(request, pk):
-    obj = get_object_or_404(Memory, id = pk)
+    obj = get_object_or_404(Memory, id=pk)
     if request.method == "post":
-        form = MemoryForm(request.POST, instance = obj)
+        form = MemoryForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect('MyApp:book_detail', pk = obj.book.pk)
+            return redirect('MyApp:book_detail', pk=obj.book.pk)
     else:
-        form = MemoryForm(instance = obj)
+        form = MemoryForm(instance=obj)
         return render(request, 'MyApp/register.html', {'form': form})
 
-# 詳細画面から感想を更新するview
+
 def writingthisbookmemory(request, book_id):
-    obj = get_object_or_404(Book, id = book_id)
-    form = MemoryForm({'book':obj})
+    obj = get_object_or_404(Book, id=book_id)
+    form = MemoryForm({'book': obj})
     if request.method == "POST":
         form = MemoryForm(request.POST)
         if form.is_valid():
             memory = form.save(commit=False)
             memory.save()
-            return redirect('MyApp:book_detail', pk = memory.book.pk)
+            return redirect('MyApp:book_detail', pk=memory.book.pk)
     else:
         return render(request, 'MyApp/register.html', {'form': form})
 
-# 本の感想を削除するview
+
 def deletememory(request, pk):
-    obj = get_object_or_404(Memory, id = pk)
+    obj = get_object_or_404(Memory, id=pk)
     book_id = obj.book.pk
-    if request.method == "POST": 
-        obj.delete() 
-        return redirect('MyApp:book_detail', pk = book_id)
-    context = {'obj':obj}
+    if request.method == "POST":
+        obj.delete()
+        return redirect('MyApp:book_detail', pk=book_id)
+    context = {'obj': obj}
     return render(request, "MyApp/delete.html", context)
 
-# 登録されている本のデータを削除するview
+
 def deletebook(request, pk):
-    obj = get_object_or_404(Book, id = pk)
+    obj = get_object_or_404(Book, id=pk)
     if request.method == "POST":
         obj.delete()
         return redirect('MyApp:index')
-    context = {'obj':obj}
+    context = {'obj': obj}
     return render(request, "MyApp/delete.html", context)

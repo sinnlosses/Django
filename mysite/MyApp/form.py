@@ -4,7 +4,7 @@ from MyApp.models import Book, Author, Memory
 class AuthorForm(ModelForm):
     class Meta:
         model = Author
-        fields = ('name',)
+        fields = ('author',)
 
 class BookForm(ModelForm):
     class Meta:
@@ -14,4 +14,4 @@ class BookForm(ModelForm):
 class MemoryForm(ModelForm):
     class Meta:
         model = Memory
-        fields = ('book','text')
+        fields = ('title','text',)
