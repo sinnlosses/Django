@@ -9,7 +9,7 @@
     
     <button onclick = "location.href = '{% url  'MyApp:updatememory' memory.id %}'">編集</button>
     <button onclick = "location.href = '{% url  'MyApp:deletememory' memory.id %}'">削除</button>
-    <br>
+    
 
     <a href="{% url 'MyApp:writingmemory' book.id%}">Write memory of this book data</a><br>
     <a href="{% url 'MyApp:deletebook' book.id %}">Delete this book data</a><br>

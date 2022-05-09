@@ -61,7 +61,7 @@ def updatememory(request, pk):
         form = MemoryForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect('MyApp:book_detail', pk=obj.book.pk)
+            return redirect('MyApp:book_detail', pk=obj.title.pk)
     else:
         form = MemoryForm(instance=obj)
         return render(request, 'MyApp/register.html', {'form': form})
@@ -75,19 +75,18 @@ def writingthisbookmemory(request, book_id):
         if form.is_valid():
             memory = form.save(commit=False)
             memory.save()
-            return redirect('MyApp:book_detail', pk=memory.book.pk)
+            return redirect('MyApp:book_detail', pk=memory.obj.pk)
     else:
         return render(request, 'MyApp/register.html', {'form': form})
 
 
 def deletememory(request, pk):
     obj = get_object_or_404(Memory, id=pk)
-    book_id = obj.book.pk
+    book_id = obj.title.pk
     if request.method == "POST":
         obj.delete()
         return redirect('MyApp:book_detail', pk=book_id)
-    context = {'obj': obj}
-    return render(request, "MyApp/delete.html", context)
+    return render(request, "MyApp/delete.html", {'obj': obj})
 
 
 def deletebook(request, pk):
